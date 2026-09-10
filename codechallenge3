@@ -1,0 +1,34 @@
+#Create a program that calculates total shipping charges using package details, location #rules and strict conditional order
+
+print("GLOBAL FREIGHT CALCULATOR >_<")
+
+sender_name = input("Sender Name --> ")
+item_type = input("Type of Item --> ")
+is_fragile = input("Is the item fragile? (True/False): ") == "True"
+weight = float(input("Weight (kg) --> "))
+distance = float(input("Distance (km) --> "))
+is_express = input("Is it express? (True/False) --> ") == "True"
+is_international = input("Is it international? (True/False) --> ") == "True"
+
+# Calculate base cost
+base_cost = (weight * 2.50) + (distance * 0.15)
+
+# Apply the first matching condition only
+if weight <= 2 and distance <= 100 and not is_express and not is_international and not is_fragile:
+    total = 0
+
+elif is_international and is_express:
+    total = (base_cost * 1.40) + 50
+
+elif is_express or (is_international and weight > 20):
+    total = (base_cost * 1.20) + 25
+
+elif weight > 30 or distance > 1000:
+    total = base_cost + 30
+
+else:
+    total = base_cost
+
+print("Sender:", sender_name)
+print("Item:", item_type)
+print("Total Shipping Charge: $",total)
