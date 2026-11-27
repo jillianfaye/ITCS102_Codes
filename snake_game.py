@@ -13,17 +13,17 @@ GAME_TITLE = "Snake"
 CELL_SIZE = 25           # size of one square, in pixels
 GRID_WIDTH = 24          # how many squares across
 GRID_HEIGHT = 18         # how many squares down
-SPEED = 8                # moves per second: higher = faster snake
-START_LENGTH = 5         # how long the snake is at the start
+SPEED = 6                # moves per second: higher = faster snake
+START_LENGTH = 3         # how long the snake is at the start
 POINTS_PER_FOOD = 1      # score for each food eaten
-GROW_PER_FOOD = 10       # how many squares the snake grows per food
-WALLS_KILL = False        # False = snake goes through walls to the other side
+GROW_PER_FOOD = 1        # how many squares the snake grows per food
+WALLS_KILL = True        # False = snake goes through walls to the other side
 
 # Colors are (red, green, blue), each from 0 to 255
-BACKGROUND_COLOR = (20, 85, 38)
-GRID_COLOR = (32, 85, 56)
-SNAKE_COLOR = (90, 85, 120)
-HEAD_COLOR = (50, 10, 80)
+BACKGROUND_COLOR = (20, 24, 38)
+GRID_COLOR = (32, 38, 56)
+SNAKE_COLOR = (255, 100, 180)
+HEAD_COLOR = (200, 60, 130)
 FOOD_COLOR = (235, 80, 80)
 TEXT_COLOR = (240, 240, 240)
 
@@ -95,6 +95,7 @@ def draw_game(snake, food, score):
 snake, direction, food, score, grow = new_game()
 game_over = False
 running = True
+high_score = 0
 
 while running:
     # ---- 1. EVENTS: read the keyboard ----
@@ -130,7 +131,7 @@ while running:
             new_head = (new_head[0] % GRID_WIDTH, new_head[1] % GRID_HEIGHT)
 
         if new_head in snake:                                # hit itself
-            game_over = False
+            game_over = True
 
         if not game_over:
             snake.insert(0, new_head)                        # add the new head
@@ -138,6 +139,7 @@ while running:
                 score = score + POINTS_PER_FOOD
                 grow = grow + GROW_PER_FOOD
                 food = place_food(snake)
+                SPEED=SPEED+1
             if grow > 0:
                 grow = grow - 1                              # keep the tail: snake grows
             else:
@@ -145,8 +147,11 @@ while running:
 
     # ---- 3. DRAW: paint the new frame ----
     draw_game(snake, food, score)
+    if score > high_score:
+        high_score=score
+    draw_text("Best:"+str(high_score),40)
     if game_over:
-        draw_text("di marunong ngekk :P", HEIGHT // 2 - 40)
+        draw_text("GAME OVER", HEIGHT // 2 - 40)
         draw_text("Score: " + str(score) + "   R = play again   Q = quit", HEIGHT // 2)
     pygame.display.flip()
     clock.tick(SPEED)
