@@ -9,7 +9,7 @@ import pygame
 # ============================================================
 #  PART 1: GAME SETTINGS  (safe to change: start here!)
 # ============================================================
-GAME_TITLE = "Snake"
+GAME_TITLE = "Pink Snake"
 CELL_SIZE = 25           # size of one square, in pixels
 GRID_WIDTH = 24          # how many squares across
 GRID_HEIGHT = 18         # how many squares down
